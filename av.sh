@@ -2,6 +2,28 @@
 
 echo "No-Name AV v0.1.0-dev"
 
+if [[ ${UPDATE} = 1 ]]
+then
+	echo -n "Connect to the server without a SSL?(y/n): "
+	read conToTheSrv
+	if [ ${conToTheSrv} == "y" ]
+	then
+		echo "Downloading db.txt..."
+		curl -O http://hello-world.ct8.pl/current/db.txt
+		if ! [ -f db.txt ]
+		then
+			echo "The db.txt file does not exist in the current directory. (${PWD})"
+			exit -1
+		else
+			echo "Updated successfully."
+			exit 0;
+		fi
+	else
+		echo "Exit."
+		exit -1;
+	fi
+fi
+
 if ! [ $1 ]
 then
 	echo "Please specify the file path."
@@ -9,7 +31,7 @@ then
 fi
 
 init() {
-	if [ -f db.txt ]
+	if [[ -f db.txt ]]
 	then
 		database=$(cat db.txt)
 	else
@@ -22,12 +44,12 @@ scan() {
 	sleep 2
 	for f in ${files[*]}
 	do
-		echo "Scanning \"${f}\" ..."
+		echo "Scanning \"${f}\" ... "
 		for x in ${database}
 		do
 			if [[ $(md5sum ${f} | sed "s/  ${f//"/"/"\/"}//I") == ${x} ]]
 			then
-				echo "Threat found! ${f} is in the database."
+				echo -e "\033[1;31mTHREAT FOUND: ${f}\033[1;0m"
 				threats+=(${f})
 			fi
 		done

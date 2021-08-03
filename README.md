@@ -10,3 +10,9 @@ Run the av.sh script with path to the program(s) as the arguments. Sample usage:
 ```
 ./av.sh program1 program2 ../programs/*
 ```
+# How to update the datatbase?
+Run the av.sh with UPDATE shell variable exported to 1.
+Updating:
+```
+UPDATE=1 ./av.sh
+```
