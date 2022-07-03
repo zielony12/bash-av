@@ -10,6 +10,7 @@ then
 	then
 		echo "Downloading db.txt..."
 		curl -O http://hello-world.ct8.pl/current/db.txt
+		curl -O https://virusshare.com/hashfiles/VirusShare_00052.md5 #130k md5 
 		if ! [ -f db.txt ]
 		then
 			echo "The db.txt file does not exist in the current directory. (${PWD})"
